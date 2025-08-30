@@ -29,7 +29,6 @@ class Market:
                     new_order_book[price] = kept
             self.order_book[side] = new_order_book
 
-        # mid ± spread/2 —— 注意：你代码里 buy 用 mid - spread/2
         execution_price = self.price - self.spread/2 if order_type == 'buy' else self.price + self.spread/2
 
         side_book = self.order_book[order_type]
