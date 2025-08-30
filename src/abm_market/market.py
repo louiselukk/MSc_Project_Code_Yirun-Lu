@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+
 class Market:
     def __init__(self, initial_price=100, long_term_mean=100, spread=1, alpha=0.1, beta=0.05, noise_std=0.1, window_size=10):
         self.traded_volume = 0   # Cumulative volume
