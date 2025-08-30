@@ -36,12 +36,17 @@ def collect_clustering_by_param_and_noise(run_simulation, param_name, param_valu
         results[noise] = (means, stds)
     return results
 
-def plot_clustering_with_errorbars(param_values, results, param_name, out="results/clustering"):
-    os.makedirs(out, exist_ok=True)
-    plt.figure(figsize=(10,6))
+def plot_clustering_with_errorbars(param_values, results, param_name):
+    plt.figure(figsize=(10, 6))
     for noise, (means, stds) in results.items():
-        plt.errorbar(param_values, means, yerr=stds, fmt='o--', capsize=4, label=f"σ={noise:.3f}")
-    plt.title(f"Volatility Clustering vs {param_name}")
-    plt.xlabel(param_name); plt.ylabel("Mean ACF(|log return|)"); plt.grid(True); plt.legend(); plt.tight_layout()
-    fname = os.path.join(out, f"clustering_vs_{param_name}.png")
-    plt.savefig(fname); plt.close(); print(f"Saved → {fname}")
+        label = f"σ={noise:.3f}"
+        plt.errorbar(param_values, means, yerr=stds, fmt='o--', capsize=4, label=label)
+
+    plt.title(f"Volatility Clustering vs {param_name} (Grouped by Noise_std)")
+    plt.xlabel(param_name)
+    plt.ylabel("Clustering Strength (Mean ACF of |log return|)")
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f"clustering_vs_{param_name}_grouped_by_noise.png")
+    plt.show()
