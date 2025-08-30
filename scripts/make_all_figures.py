@@ -1,6 +1,9 @@
-import sys, pathlib
+import os, pathlib, sys
 sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+(FIG_DIR := ROOT / "results" / "figures").mkdir(parents=True, exist_ok=True)
+(PVS_DIR := ROOT / "results" / "plots_vs").mkdir(parents=True, exist_ok=True)
+(ACF_DIR := ROOT / "results" / "plots_timeavg_acf_clean").mkdir(parents=True, exist_ok=True)
 from abm_market.simulate import run_simulation, run_simulation_fixed_strategy
 from abm_viz.sharpe_plots import plot_combined_figures
 from abm_viz.pnl_vs_params import scan_param_three_agents, plot_scan_three_agents
