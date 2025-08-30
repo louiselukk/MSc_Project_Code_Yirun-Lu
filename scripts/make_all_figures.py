@@ -1,10 +1,10 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "src"))
-
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 from abm_market.simulate import run_simulation, run_simulation_fixed_strategy
 from abm_viz.sharpe_plots import plot_combined_figures
 from abm_viz.pnl_vs_params import scan_param_three_agents, plot_scan_three_agents
-from abm_viz.acf_plots import collect_clustering_by_param_and_noise, plot_clustering_with_errorbars
+from abm_viz.acf_plots import plot_timeavg_acf_subplots_compare
 from abm_viz.payoff_ternary import run_regime_matrix_rowsum, plot_ternary_rowsum
 from abm_market.directional_accuracy import direction_stats_all
 
@@ -25,8 +25,21 @@ if __name__ == "__main__":
     plot_scan_three_agents("noise_std", values, mean_logs, use_delta=True, normalize=True)
 
     # ACF
-    res = collect_clustering_by_param_and_noise(run_simulation, "alpha", [0,0.1,0.2,0.3,0.4,0.5], [0,0.001,0.01,0.05,0.1])
-    plot_clustering_with_errorbars([0,0.1,0.2,0.3,0.4,0.5], res, "α (impact factor)")
+    alpha_values  = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+    beta_values   = [0, 0.05, 0.1, 0.15, 0.2, 0.3]
+    noise_values  = [0, 0.001, 0.005, 0.01, 0.05, 0.1]
+    spread_values = [0, 0.01, 0.05, 0.1, 0.2, 0.3]
+    window_values = [5, 10, 20, 30, 50]
+
+    num_steps = 1000
+    max_lag   = 20
+
+    plot_timeavg_acf_subplots_compare('alpha',       alpha_values,  BASE, num_steps, max_lag, 100, str(save_dir))
+    plot_timeavg_acf_subplots_compare('beta',        beta_values,   BASE, num_steps, max_lag, 200, str(save_dir))
+    plot_timeavg_acf_subplots_compare('noise_std',   noise_values,  BASE, num_steps, max_lag, 300, str(save_dir))
+    plot_timeavg_acf_subplots_compare('spread',      spread_values, BASE, num_steps, max_lag, 400, str(save_dir))
+    plot_timeavg_acf_subplots_compare('window_size', window_values, BASE, num_steps, max_lag, 500, str(save_dir))
+
 
     # Triangle plots
     REGIMES = {'baseline': dict(spread=0.10, noise_std=0.10, window_size=10)}
