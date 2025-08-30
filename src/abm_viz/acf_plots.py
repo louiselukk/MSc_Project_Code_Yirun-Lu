@@ -1,8 +1,6 @@
-import os
 import numpy as np
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from abm_market.simulate import run_simulation
 
 def acf_time_avg(x, max_lag):
     x = np.asarray(x, float); N = len(x)
