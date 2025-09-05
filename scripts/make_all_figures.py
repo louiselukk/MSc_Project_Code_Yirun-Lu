@@ -32,7 +32,7 @@ if __name__ == "__main__":
     beta_values   = [0, 0.05, 0.1, 0.15, 0.2, 0.3]
     noise_values  = [0, 0.001, 0.005, 0.01, 0.05, 0.1]
     spread_values = [0, 0.01, 0.05, 0.1, 0.2, 0.3]
-    window_values = [5, 10, 20, 30, 50]
+    window_values = [5, 10, 20, 30, 40, 50]
 
     num_steps = 1000
     max_lag   = 20
